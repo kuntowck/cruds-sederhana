@@ -10,9 +10,14 @@ function query($query)
   $result = mysqli_query($db, $query);
   $rows = [];
 
-  while ($row = mysqli_fetch_assoc($result)) {
-    $rows[] = $row;
+  if (mysqli_num_rows($result) == 1) {
+    return mysqli_fetch_assoc($result);
+  } else {
+    while ($row = mysqli_fetch_assoc($result)) {
+      $rows[] = $row;
+    }
   }
 
-  return $rows  ;
+
+  return $rows;
 }

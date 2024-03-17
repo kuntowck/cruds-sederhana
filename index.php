@@ -18,11 +18,8 @@ $warkop = query("SELECT * FROM menu");
 
   <table border="1" cellspacing="0" cellpadding="10">
     <tr>
-      <th>#</th>
+      <th>No.</th>
       <th>Nama</th>
-      <th>Alamat</th>
-      <th>Makanan</th>
-      <th>Minuman</th>
       <th>Gambar</th>
       <th>Aksi</th>
     </tr>
@@ -32,14 +29,8 @@ $warkop = query("SELECT * FROM menu");
       <tr>
         <td><?= $i++; ?></td>
         <td><?= $w['tempat']; ?></td>
-        <td><?= $w['alamat']; ?></td>
-        <td><?= $w['makanan']; ?></td>
-        <td><?= $w['minuman']; ?></td>
-        <td><img width="100" src="img/<?= $w['gambar']; ?>" alt=""></td>
-        <td>
-          <a href="">Ubah</a> | 
-          <a href="">Delete</a>
-        </td>
+        <td><img src="img/<?= $w['gambar']; ?>" alt="<?= $w['gambar']; ?>" width="100"></td>
+        <td><a href="detail.php?id=<?= $w['id']; ?>">Lihat detail</a></td>
       </tr>
     <?php endforeach; ?>
   </table>
