@@ -36,3 +36,12 @@ function tambah($data)
   echo mysqli_error($db);
   return mysqli_affected_rows($db);
 }
+
+function hapus($id)
+{
+  $db = koneksi();
+
+  mysqli_query($db, "DELETE FROM menu WHERE id = $id");
+
+  return mysqli_affected_rows($db);
+}

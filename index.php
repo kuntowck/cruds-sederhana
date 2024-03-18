@@ -41,7 +41,7 @@ $warkop = query("SELECT * FROM menu");
         <td><img width="100" src="img/<?= $w['gambar']; ?>" alt=""></td>
         <td>
           <a href="">Ubah</a> | 
-          <a href="">Delete</a>
+          <a href="hapus.php?id=<?= $w['id']; ?>">Delete</a>
         </td>
       </tr>
     <?php endforeach; ?>
