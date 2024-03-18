@@ -16,6 +16,9 @@ $warkop = query("SELECT * FROM menu");
 <body>
   <h3>Daftar Warkop</h3>
 
+  <a href="tambah.php">Tambah data</a>
+  <br><br>
+
   <table border="1" cellspacing="0" cellpadding="10">
     <tr>
       <th>#</th>

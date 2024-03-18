@@ -14,5 +14,25 @@ function query($query)
     $rows[] = $row;
   }
 
-  return $rows  ;
+  return $rows;
+}
+
+function tambah($data)
+{
+  $db = koneksi();
+
+  $tempat = htmlspecialchars($data['tempat']);
+  $alamat = htmlspecialchars($data['alamat']);
+  $makanan = htmlspecialchars($data['makanan']);
+  $minuman = htmlspecialchars($data['minuman']);
+  $gambar = $data['gambar'];
+
+  $query = "INSERT INTO menu
+              VALUES
+            (null, '$tempat', '$makanan', '$minuman', '$alamat', '$gambar');
+           ";
+
+  mysqli_query($db, $query);
+  echo mysqli_error($db);
+  return mysqli_affected_rows($db);
 }
