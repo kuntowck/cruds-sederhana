@@ -2,6 +2,10 @@
 require 'functions.php';
 
 $warkop = query("SELECT * FROM menu");
+
+if (isset($_POST['tombol-cari'])) {
+  $warkop = cari($_POST['keyword']);
+}
 ?>
 
 <!DOCTYPE html>
@@ -19,6 +23,12 @@ $warkop = query("SELECT * FROM menu");
   <a href="tambah.php">Tambah data</a>
   <br><br>
 
+  <form method="post" action="">
+    <input type="text" name="keyword" placeholder="Masukkan keyword pencarian..." size="30" autocomplete="off" autofocus>
+    <button type="submit" name="tombol-cari">Cari</button>
+  </form>
+  <br>
+  
   <table border="1" cellspacing="0" cellpadding="10">
     <tr>
       <th>#</th>
@@ -29,7 +39,15 @@ $warkop = query("SELECT * FROM menu");
       <th>Minuman</th>
       <th>Aksi</th>
     </tr>
-
+    
+    <?php if (empty($warkop)) : ?>
+      <tr>
+        <td colspan="7">
+          <p>Data tidak ditemukan!</p>
+        </td>
+      </tr>
+    <?php endif; ?>
+    
     <?php $i = 1;
     foreach ($warkop as $w) : ?>
       <tr>

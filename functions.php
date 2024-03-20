@@ -69,3 +69,23 @@ function ubah($data)
 
   return mysqli_affected_rows($db);
 }
+
+
+function cari($keyword)
+{
+  $db = koneksi();
+
+  $query = "SELECT * FROM menu WHERE
+            tempat LIKE '%$keyword%' OR
+            alamat LIKE '%$keyword%'";
+
+  $result = mysqli_query($db, $query);
+
+  $rows = [];
+
+  while ($row = mysqli_fetch_assoc($result)) {
+    $rows[] = $row;
+  }
+
+  return $rows;
+}
