@@ -1,4 +1,11 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['login'])) {
+  header('Location: login.php');
+  exit;
+}
+
 require 'functions.php';
 
 $warkop = query("SELECT * FROM menu");
@@ -20,6 +27,8 @@ if (isset($_POST['tombol-cari'])) {
 <body>
   <h3>Daftar Warkop</h3>
 
+  <a href="logout.php">Logout</a>
+
   <a href="tambah.php">Tambah data</a>
   <br><br>
 
@@ -28,7 +37,7 @@ if (isset($_POST['tombol-cari'])) {
     <button type="submit" name="tombol-cari">Cari</button>
   </form>
   <br>
-  
+
   <table border="1" cellspacing="0" cellpadding="10">
     <tr>
       <th>#</th>
@@ -39,7 +48,7 @@ if (isset($_POST['tombol-cari'])) {
       <th>Minuman</th>
       <th>Aksi</th>
     </tr>
-    
+
     <?php if (empty($warkop)) : ?>
       <tr>
         <td colspan="7">
@@ -47,7 +56,7 @@ if (isset($_POST['tombol-cari'])) {
         </td>
       </tr>
     <?php endif; ?>
-    
+
     <?php $i = 1;
     foreach ($warkop as $w) : ?>
       <tr>
@@ -58,7 +67,7 @@ if (isset($_POST['tombol-cari'])) {
         <td><?= $w['makanan']; ?></td>
         <td><?= $w['minuman']; ?></td>
         <td>
-          <a href="ubah.php?id=<?= $w['id']; ?>">Ubah</a> | 
+          <a href="ubah.php?id=<?= $w['id']; ?>">Ubah</a> |
           <a href="hapus.php?id=<?= $w['id']; ?>" onclick="return confirm('Apakah Anda yakin?')">Delete</a>
         </td>
       </tr>

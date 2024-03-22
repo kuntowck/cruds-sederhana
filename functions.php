@@ -89,3 +89,21 @@ function cari($keyword)
 
   return $rows;
 }
+
+function login($data)
+{
+  $db = koneksi();
+
+  $username = htmlspecialchars($data['username']);
+  $password = htmlspecialchars($data['password']);
+
+  $query = "SELECT * FROM user WHERE username = '$username' && password = '$password'";
+  
+  if (query($query)) {
+    $_SESSION['login'] = true;
+    header('Location: index.php');
+    exit;
+  } else {
+    return ['error' => 'true', 'pesan' => 'Username / Password salah!'];
+  }
+}
