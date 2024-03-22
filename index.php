@@ -27,10 +27,14 @@ if (isset($_POST['tombol-cari'])) {
 <body>
   <h3>Daftar Warkop</h3>
 
-  <a href="logout.php">Logout</a>
-
-  <a href="tambah.php">Tambah data</a>
-  <br><br>
+  <ul>
+    <li>
+      <a href="logout.php">Logout</a>
+    </li>
+    <li>
+      <a href="tambah.php">Tambah data</a>
+    </li>
+  </ul>
 
   <form method="post" action="">
     <input type="text" name="keyword" placeholder="Masukkan keyword pencarian..." size="30" autocomplete="off" autofocus>

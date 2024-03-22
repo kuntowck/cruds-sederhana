@@ -97,13 +97,51 @@ function login($data)
   $username = htmlspecialchars($data['username']);
   $password = htmlspecialchars($data['password']);
 
-  $query = "SELECT * FROM user WHERE username = '$username' && password = '$password'";
-  
-  if (query($query)) {
-    $_SESSION['login'] = true;
-    header('Location: index.php');
-    exit;
-  } else {
-    return ['error' => 'true', 'pesan' => 'Username / Password salah!'];
+  $query = "SELECT * FROM user WHERE username = '$username'";
+
+  if ($result = query($query)[0]) {
+    if (password_verify($password, $result['password'])) {
+      $_SESSION['login'] = true;
+      
+      header('Location: index.php');
+      exit;
+    }
   }
+
+  return ['error' => 'true', 'pesan' => 'Username / Password salah!'];
+}
+
+function registrasi($data)
+{
+  $db = koneksi();
+
+  $username = htmlspecialchars(strtolower($data['username']));
+  $kpassword = mysqli_real_escape_string($db, $data['kpassword']);
+  $password = mysqli_real_escape_string($db, $data['password']);
+
+  // cek jika username udah terdaftar
+  if (query("SELECT * FROM user WHERE username = '$username'")) {
+    echo "<script>
+            alert('Username sudah terdaftar');
+            document.location.href = 'registrasi.php';
+          </script>";
+    return false;
+  }
+
+  // cek konfirmasi password tidak sesuai
+  if ($kpassword !== $password) {
+    echo "<script>
+            alert('Konfirmasi password tidak sesuai');
+            document.location.href = 'registrasi.php';
+          </script>";
+    return false;
+  }
+
+  // cek username dan passwrord sesuai
+  $password = password_hash($password, PASSWORD_DEFAULT);
+
+  $query = "INSERT INTO user VALUES ('', '$username', '$password')";
+
+  mysqli_query($db, $query) or die(mysqli_error($db));
+  return mysqli_affected_rows($db);
 }
