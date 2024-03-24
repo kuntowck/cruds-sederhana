@@ -37,46 +37,50 @@ if (isset($_POST['tombol-cari'])) {
   </ul>
 
   <form method="post" action="">
-    <input type="text" name="keyword" placeholder="Masukkan keyword pencarian..." size="30" autocomplete="off" autofocus>
-    <button type="submit" name="tombol-cari">Cari</button>
+    <input type="text" class="keyword" name="keyword" placeholder="Masukkan keyword pencarian..." size="30" autocomplete="off" autofocus>
+    <button type="submit" class="tombol-cari" name="tombol-cari">Cari</button>
   </form>
   <br>
 
-  <table border="1" cellspacing="0" cellpadding="10">
-    <tr>
-      <th>#</th>
-      <th>Nama</th>
-      <th>Gambar</th>
-      <th>Alamat</th>
-      <th>Makanan</th>
-      <th>Minuman</th>
-      <th>Aksi</th>
-    </tr>
-
-    <?php if (empty($warkop)) : ?>
+  <div class="container">
+    <table border="1" cellspacing="0" cellpadding="10">
       <tr>
-        <td colspan="7">
-          <p>Data tidak ditemukan!</p>
-        </td>
+        <th>#</th>
+        <th>Nama</th>
+        <th>Gambar</th>
+        <th>Alamat</th>
+        <th>Makanan</th>
+        <th>Minuman</th>
+        <th>Aksi</th>
       </tr>
-    <?php endif; ?>
+  
+      <?php if (empty($warkop)) : ?>
+        <tr>
+          <td colspan="7">
+            <p>Data tidak ditemukan!</p>
+          </td>
+        </tr>
+      <?php endif; ?>
+  
+      <?php $i = 1;
+      foreach ($warkop as $w) : ?>
+        <tr>
+          <td><?= $i++; ?></td>
+          <td><?= $w['tempat']; ?></td>
+          <td><img width="100" src="img/<?= $w['gambar']; ?>" alt=""></td>
+          <td><?= $w['alamat']; ?></td>
+          <td><?= $w['makanan']; ?></td>
+          <td><?= $w['minuman']; ?></td>
+          <td>
+            <a href="ubah.php?id=<?= $w['id']; ?>">Ubah</a> |
+            <a href="hapus.php?id=<?= $w['id']; ?>" onclick="return confirm('Apakah Anda yakin?')">Delete</a>
+          </td>
+        </tr>
+      <?php endforeach; ?>
+    </table>
+  </div>
 
-    <?php $i = 1;
-    foreach ($warkop as $w) : ?>
-      <tr>
-        <td><?= $i++; ?></td>
-        <td><?= $w['tempat']; ?></td>
-        <td><img width="100" src="img/<?= $w['gambar']; ?>" alt=""></td>
-        <td><?= $w['alamat']; ?></td>
-        <td><?= $w['makanan']; ?></td>
-        <td><?= $w['minuman']; ?></td>
-        <td>
-          <a href="ubah.php?id=<?= $w['id']; ?>">Ubah</a> |
-          <a href="hapus.php?id=<?= $w['id']; ?>" onclick="return confirm('Apakah Anda yakin?')">Delete</a>
-        </td>
-      </tr>
-    <?php endforeach; ?>
-  </table>
+  <script src="js/script.js"></script>
 </body>
 
 </html>
