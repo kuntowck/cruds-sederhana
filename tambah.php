@@ -50,12 +50,15 @@ if (isset($_POST['tombol-tambah'])) {
     </li>
     <li>
       <label for="gambar">Gambar: </label>
-      <input type="file" name="gambar" id="gambar">
+      <input type="file" name="gambar" id="gambar" class="gambar" onchange="previewImage()">
+      <img src="img/noimage.jpg" alt="No image" width="100" style="display: block;" class="image-preview">
     </li>
     <li>
       <button type="submit" name="tombol-tambah">Tambah data</button>
     </li>
   </form>
+
+<script src="js/script.js"></script>
 </body>
 
 </html>

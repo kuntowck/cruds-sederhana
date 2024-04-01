@@ -41,7 +41,7 @@ if (isset($_POST['tombol-ubah'])) {
 <body>
   <h3>Ubah Data Warkop</h3>
 
-  <form method="post" action="">
+  <form method="post" action="" enctype="multipart/form-data">
     <input type="hidden" name="id" value="<?= $w['id'];?> ">
     <ul>
       <li>
@@ -61,6 +61,7 @@ if (isset($_POST['tombol-ubah'])) {
         <input type="text" name="minuman" id="minuman" value="<?= $w['minuman']; ?>">
       </li>
       <li>
+        <input type="hidden" name="gambar-lama" value="<?= $w['gambar']; ?>">
         <label for="gambar">Gambar: </label>
         <br>
         <img width="100" src="img/<?= $w['gambar']; ?>" alt="<?= $w['gambar']; ?>">

@@ -51,11 +51,8 @@ function upload()
 
   // cek validasi gambar jika user tidak upload
   if ($error === 4) {
-    echo "<script>
-            alert('Upload gambar dahulu.')
-          </script>";
 
-    return false;
+    return 'noimage.jpg';
   }
 
   // cek ekstensi file
@@ -102,6 +99,12 @@ function hapus($id)
 {
   $db = koneksi();
 
+  // menghapus file gambar di dir img
+  $menu = query("SELECT * FROM menu WHERE id = $id");
+  if ($menu['gambar'] != 'noimage.jpg') {
+    unlink('img/' . $menu['gambar']);
+  }
+
   mysqli_query($db, "DELETE FROM menu WHERE id = $id") or die(mysqli_error($db));
 
   return mysqli_affected_rows($db);
@@ -116,7 +119,14 @@ function ubah($data)
   $alamat = htmlspecialchars($data['alamat']);
   $makanan = htmlspecialchars($data['makanan']);
   $minuman = htmlspecialchars($data['minuman']);
-  $gambar = $data['gambar'];
+  $gambarLama = $data['gambar-lama'];
+
+  $gambar = upload();
+  if (!$gambar) {
+    return false;
+  } elseif ($gambar == 'noimage.jpg') {
+    $gambar = $gambarLama;
+  }
 
   $query = "UPDATE menu SET
               tempat = '$tempat',
