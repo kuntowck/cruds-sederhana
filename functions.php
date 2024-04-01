@@ -25,7 +25,11 @@ function tambah($data)
   $alamat = htmlspecialchars($data['alamat']);
   $makanan = htmlspecialchars($data['makanan']);
   $minuman = htmlspecialchars($data['minuman']);
-  $gambar = $data['gambar'];
+
+  $gambar = upload();
+  if (!$gambar) {
+    return false;
+  }
 
   $query = "INSERT INTO menu
               VALUES
@@ -35,6 +39,63 @@ function tambah($data)
   mysqli_query($db, $query) or die(mysqli_error($db));
 
   return mysqli_affected_rows($db);
+}
+
+function upload()
+{
+  $namaFile = $_FILES['gambar']['name'];
+  $tipeFile = $_FILES['gambar']['type'];
+  $ukuranFile = $_FILES['gambar']['size'];
+  $error = $_FILES['gambar']['error'];
+  $tmpFile = $_FILES['gambar']['tmp_name'];
+
+  // cek validasi gambar jika user tidak upload
+  if ($error === 4) {
+    echo "<script>
+            alert('Upload gambar dahulu.')
+          </script>";
+
+    return false;
+  }
+
+  // cek ekstensi file
+  $daftarEkstensi = ['jpg', 'jpeg', 'png'];
+  $ekstensiFile = strtolower(pathinfo($namaFile, PATHINFO_EXTENSION));
+  if (!in_array($ekstensiFile, $daftarEkstensi)) {
+    echo "<script>
+            alert('Apa yang Anda upload bukan gambar.')
+          </script>";
+
+    return false;
+  }
+
+  // cek type file
+  if ($tipeFile != 'image/jpeg' && $tipeFile != 'image/png') {
+    echo "<script>
+            alert('Apa yang Anda upload bukan gambar.')
+          </script>";
+
+    return false;
+  }
+
+  // cek ukuran file
+  if ($ukuranFile > 5000000) {
+    echo "<script>
+            alert('Ukuran file terlalu besar (Maks. 5 MB)')
+          </script>";
+
+    return false;
+  }
+
+  // generate nama file baru
+  $namaFileBaru = uniqid();
+  $namaFileBaru .= '.';
+  $namaFileBaru .= $ekstensiFile;
+
+  // upload file
+  move_uploaded_file($tmpFile, 'img/' . $namaFileBaru);
+
+  return $namaFileBaru;
 }
 
 function hapus($id)
@@ -102,7 +163,7 @@ function login($data)
   if ($result = query($query)[0]) {
     if (password_verify($password, $result['password'])) {
       $_SESSION['login'] = true;
-      
+
       header('Location: index.php');
       exit;
     }

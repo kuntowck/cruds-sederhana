@@ -31,7 +31,7 @@ if (isset($_POST['tombol-tambah'])) {
 
 <body>
   <h3>Tambah Data Warkop</h3>
-  <form method="post" action="">
+  <form method="post" action="" enctype="multipart/form-data">
     <li>
       <label for="tempat">Nama: </label>
       <input type="text" name="tempat" id="tempat" autofocus required>
@@ -50,7 +50,7 @@ if (isset($_POST['tombol-tambah'])) {
     </li>
     <li>
       <label for="gambar">Gambar: </label>
-      <input type="file" name="gambar" id="gambar" required>
+      <input type="file" name="gambar" id="gambar">
     </li>
     <li>
       <button type="submit" name="tombol-tambah">Tambah data</button>
